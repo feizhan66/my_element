@@ -10,8 +10,15 @@
 1. [循环遍历数组，把多维数组里面的 null 转换为空字符串](./others/array_null_to_string.php)
 
 
-- 独立的：
+- 独立的模块：
+
 1. [响应式图片高度，图片的高度会跟着宽度响应式的改变](./responsive_height/)
 
+2. [PHP为图片添加文字水印](./watermark/)
 
+3. [微信单独分享](./wechat_share/)
+
+
+- TP框架模块
+1.
 
