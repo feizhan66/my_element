@@ -26,3 +26,8 @@
 - TP框架模块
 1.
 
+
+## Jquery插件列表
+ 1. [图片伸缩放大](./jquery_plug/jQueryZoom/)
+
+
