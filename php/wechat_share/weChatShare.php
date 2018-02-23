@@ -102,8 +102,8 @@ class JSSDK {
 }
 
 // 定义参数
-$appId = "wx0a48f0eceb92558c";
-$appSecret = "3163a0db9e151707e865e40e8ef1b1af";
+$appId = "这里填上你的微信appid";
+$appSecret = "这里填上你的微信secret";
 
 $url = $_GET['url'];
 $jssdk = new JSSDK($appId,$appSecret,$url);//按照自己的公众号填写
