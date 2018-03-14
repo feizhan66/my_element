@@ -25,7 +25,7 @@
 
 2. 其他微信接口，需要通过基础支持中的“获取access_token”接口来获取到的普通access_token调用。
 
-3.  * 简单的说： * 网页授权access_token是根据用户授权获得的用户access_token，在获取该用户的信息时（例如用户的头像等信息）用到。普通access_token是平台调用实现平台功能的，与用户无关
+3.  *简单的说：* 网页授权access_token是根据用户授权获得的用户access_token，在获取该用户的信息时（例如用户的头像等信息）用到。普通access_token是平台调用实现平台功能的，与用户无关
 
 - 关于UnionID机制
 
