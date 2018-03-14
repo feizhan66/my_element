@@ -61,4 +61,11 @@
 
 [详细的实现看官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115)
 
+三、 接口实现的功能实例
+
+- Demo页面：http://demo.open.weixin.qq.com/jssdk
+
+![image](http://mmbiz.qpic.cn/mmbiz/PiajxSqBRaEIQxibpLbyuSK39dMUJfWKTT3w5O5mich0nbKnpPnpl0QzuWuncBtibiaZQlmH1MGf3HoicWNIeaV4dXUg/0?wx_fmt=png)
+
+- 示例代码：http://demo.open.weixin.qq.com/jssdk/sample.zip
 
