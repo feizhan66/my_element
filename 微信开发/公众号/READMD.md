@@ -69,3 +69,7 @@
 
 - 示例代码：http://demo.open.weixin.qq.com/jssdk/sample.zip
 
+
+四、 微信网页开发样式库
+- 获取：https://github.com/Tencent/weui
+![image](http://mmbiz.qpic.cn/mmbiz_png/PiajxSqBRaEIQxibpLbyuSKyjH0owTZq7HSO4rqonJU9dmPrribiadkZkFWKPciboaO4gHuV4AZnI3vIBovlZ6bhnUA/0?wx_fmt=png)
