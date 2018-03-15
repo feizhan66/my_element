@@ -4,3 +4,5 @@
 
 支持 HTTP / HTTPS
 
+支持发送 JSON
+
