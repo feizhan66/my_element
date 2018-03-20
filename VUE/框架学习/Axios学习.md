@@ -1,4 +1,6 @@
 # Axios学习
+## 说明
+- Axios是Vue框架进行请求的方法
 
 [文档](https://www.kancloud.cn/yunye/axios/234847)
 
