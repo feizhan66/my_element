@@ -1,0 +1,22 @@
+一、验签准备
+1.原始报文：
+【total_amount=0.01&timestamp=2017-04-13 17:30:52&sign=fCKXQeYhbT8YoK8hInUvJYUDJ4Nmt16zT0T2h0kkqQY9lZlMjxf4Up/V5f5JhKhtyeagUuxkOqrSGXLXERGUJiZRzhxjXZWVHQs8QXnu0kLJMt97NFm7DaQTRZEX27+yAHe9Lrdec8jAYFluXSTzq7pGDbYSn1VM95XkZDGhFEAYoP66e6vMuiY7VHLmKBNAyBFAKN2RBEX+yipqL/E6f8GgEH0ocPQv/mXzDFt+8SgApe8pv6xLlbJPXEtj67xaqfJhSI9dVwEWq/YupxbWft+ce7E0te+nYxbbzUEv/7qlfd2pE4oqrQOWMgLuchasyM0BYJsnmhvHuSSRBnc98A==&trade_no=2017041321001004280200182071&sign_type=RSA2&auth_app_id=2016080200146537&charset=UTF-8&seller_id=2088102169553509&method=alipay.trade.wap.pay.return&app_id=2016080200146537&out_trade_no=2017413173020122&version=1.0】
+
+2.验签公钥：
+【MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs43flD/PrGrME+isL2L6Y3nfScD/E9Zbu3RUkxzvC5NsSmyfnrLc/wj046oJySfarOEyfaYepqAtH7m1nN+2FMZ9vMbHt73VDNY9z+97sNyxbhi3uTXAs/bm7mOQn+jn9Vy7LkZqB5C3kokzVO6Vo9aNNmNXs/shbRFYK0DqCol/r5AqUgHisFFyID8jrNIZYuGohLD/62hp6cQc37qzOEg2Uriu1R0KBVvZFM7WZHD6ZOMv8zVBH/fmm2Te0bOmZuSwA9CXJZx7VoUy4mTZups5D9X+S1aHydXO+Wlcz2sbnQu37gVezI8L7VpwCWnw/F42nOO+h3aOwiofVePTkwIDAQAB】
+
+3.从报文取出签名值sign：
+【fCKXQeYhbT8YoK8hInUvJYUDJ4Nmt16zT0T2h0kkqQY9lZlMjxf4Up/V5f5JhKhtyeagUuxkOqrSGXLXERGUJiZRzhxjXZWVHQs8QXnu0kLJMt97NFm7DaQTRZEX27+yAHe9Lrdec8jAYFluXSTzq7pGDbYSn1VM95XkZDGhFEAYoP66e6vMuiY7VHLmKBNAyBFAKN2RBEX+yipqL/E6f8GgEH0ocPQv/mXzDFt+8SgApe8pv6xLlbJPXEtj67xaqfJhSI9dVwEWq/YupxbWft+ce7E0te+nYxbbzUEv/7qlfd2pE4oqrQOWMgLuchasyM0BYJsnmhvHuSSRBnc98A==】
+
+二、组成待验签串：
+1.剔除空值参数：
+【total_amount=0.01&timestamp=2017-04-13 17:30:52&sign=fCKXQeYhbT8YoK8hInUvJYUDJ4Nmt16zT0T2h0kkqQY9lZlMjxf4Up/V5f5JhKhtyeagUuxkOqrSGXLXERGUJiZRzhxjXZWVHQs8QXnu0kLJMt97NFm7DaQTRZEX27+yAHe9Lrdec8jAYFluXSTzq7pGDbYSn1VM95XkZDGhFEAYoP66e6vMuiY7VHLmKBNAyBFAKN2RBEX+yipqL/E6f8GgEH0ocPQv/mXzDFt+8SgApe8pv6xLlbJPXEtj67xaqfJhSI9dVwEWq/YupxbWft+ce7E0te+nYxbbzUEv/7qlfd2pE4oqrQOWMgLuchasyM0BYJsnmhvHuSSRBnc98A==&trade_no=2017041321001004280200182071&sign_type=RSA2&auth_app_id=2016080200146537&charset=UTF-8&seller_id=2088102169553509&method=alipay.trade.wap.pay.return&app_id=2016080200146537&out_trade_no=2017413173020122&version=1.0】
+
+2.剔除sign、sign_type参数：
+【total_amount=0.01&timestamp=2017-04-13 17:30:52&trade_no=2017041321001004280200182071&auth_app_id=2016080200146537&charset=UTF-8&seller_id=2088102169553509&method=alipay.trade.wap.pay.return&app_id=2016080200146537&out_trade_no=2017413173020122&version=1.0】
+
+3、排序：
+【app_id=2016080200146537&auth_app_id=2016080200146537&charset=UTF-8&method=alipay.trade.wap.pay.return&out_trade_no=2017413173020122&seller_id=2088102169553509&timestamp=2017-04-13 17:30:52&total_amount=0.01&trade_no=2017041321001004280200182071&version=1.0】
+
+三、验签结果：
+【验签成功】
