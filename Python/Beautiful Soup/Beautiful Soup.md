@@ -24,25 +24,33 @@ $ Python setup.py install
 
 # 安装解析器
 
-Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方的解析器,其中一个是 lxml .根据操作系统不同,可以选择下列方法来安装lxml:
+- Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方的解析器,其中一个是 lxml 根据操作系统不同,可以选择下列方法来安装lxml:
 
+```
 $ apt-get install Python-lxml
 
 $ easy_install lxml
 
 $ pip install lxml
-
-另一个可供选择的解析器是纯Python实现的 html5lib , html5lib的解析方式与浏览器相同,可以选择下列方法来安装html5lib:
-
+```
+- 另一个可供选择的解析器是纯Python实现的 html5lib , html5lib的解析方式与浏览器相同,可以选择下列方法来安装html5lib:
+```
 $ apt-get install Python-html5lib
 
 $ easy_install html5lib
 
 $ pip install html5lib
+```
 
+解析器 | 使用方法 | 优势 | 劣势
+-- | -- | --- | ---
+Python标准库 | BeautifulSoup(markup, "html.parser") | Python的内置标准库、执行速度适中、文档容错能力强 | Python 2.7.3 or 3.2.2)前 的版本中文档容错能力差
 
+lxml HTML 解析器 | BeautifulSoup(markup, "lxml") | 速度快、文档容错能力强 | 需要安装C语言库
 
+lxml XML 解析器 | BeautifulSoup(markup, ["lxml", "xml"]) 、 BeautifulSoup(markup, "xml") | 速度快、唯一支持XML的解析器 | 需要安装C语言库
 
+html5lib | BeautifulSoup(markup, "html5lib") | 最好的容错性、以浏览器的方式解析文档、生成HTML5格式的文档 | 速度慢、不依赖外部扩展
 
 
 
