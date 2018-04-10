@@ -41,6 +41,7 @@ sudo apt install libpcre32-3
 ```
 
 7. 打开/etc/nginx/sites-enabled/default文件，添加如下内容：
+
 ```
 location ~ \.php$ {
                 root    /var/www/html;                                  #php文件所在的根目录
@@ -52,6 +53,12 @@ location ~ \.php$ {
 
         ## 这段内容表示处理所有对php的请求
 
+```
+- 注意点：如果安装好启动不了先查看80端口是否被占用
+```
+sudo nginx -t # 查看启动失败的原因
+
+# 定义端口的文件路径：/etc/nginx/sites-enabled/default
 ```
 
 8. 打开/etc/php/7.0/fpm/pool.d/www.conf文件，找到listen=的这两行，设置相应的IP和端口值 。
