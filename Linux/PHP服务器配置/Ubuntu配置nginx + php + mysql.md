@@ -1,17 +1,20 @@
 # Ubuntu配置nginx + php + mysql
 
+- 如果系统刚安装完成，应该更新apt
+```
+sudo apt update
+```
+
 1. 安装 nginx
 
 ```
 sudo apt install nginx
-
 ```
 
 2. 安装php7.0
 
 ```
 sudo apt install php7.0
-
 ```
 
 3. 安装 php7.0-fpm (这是php和nginx之间的连接器)
@@ -31,12 +34,10 @@ sudo apt install mysql-server
 sudo apt install php7.0-dev
 
 sudo apt install php7.0-mysql
-
 ```
 6. 安装正则表达式库pcre
 ```
 sudo apt install libpcre32-3
-
 ```
 
 7. 打开/etc/nginx/sites-enabled/default文件，添加如下内容：
