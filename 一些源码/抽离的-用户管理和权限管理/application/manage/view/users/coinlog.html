@@ -1,0 +1,127 @@
+{include file="plugin/header" /}
+{include file="plugin/table" /}
+<title>{$Think.session.manage_system_name}-恒币收支明细</title>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>用户管理 > 用户列表 -> 恒币收支明细</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div id="toolbar" class="btn-group">
+                        </div>
+						<table id="table"
+						    data-url="{:url('manage/Users/coinLog')}?tid={$tid}"
+                            /*基础配置*/
+                            data-striped="true"
+						    /*默认排序项*/
+                            data-sort-name="tid"
+                            data-sort-order="asc"
+                            /*工具栏相关*/
+                            data-toolbar="#toolbar"
+                            data-search="false"          /*搜索框*/
+                            data-search-on-enter-key="false"
+                            data-show-refresh="true"    /*刷新按钮*/
+                            /*分页相关*/
+                            data-side-pagination="server"
+                            data-pagination="true"      /*显示分页*/
+                            data-page-size="20"         /*每页显示条数*/
+                            /*移动端相关*/
+                            data-mobile-responsive="true"
+                            data-card-view="true"
+                            data-show-columns="true"
+                            /*设置radio或checkbox字段名称*/
+                            data-select-item-name="tids" >
+                            <thead>
+                                <tr>
+                                    <th data-field="checkbox"
+                                        data-align="center"
+                                        data-checkbox="true"></th>
+                                    <th data-field="tid"
+                                        data-align="center"
+                                        data-sortable="true"
+                                        data-visible="false">TID</th>
+                                    <th data-field="description"
+									    data-align="center"
+                                        data-sortable="true">明细</th>
+                                    <th data-field="count"
+                                        data-align="center"
+                                        data-sortable="true">数量</th>
+                                    <th data-field="create_time"
+                                        data-align="center"
+                                        data-sortable="true">时间</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<script type="text/javascript">
+    // 增加用户
+    function userAdd(){
+        var index = layer.open({
+            type: 2,
+            title: '添加用户',
+            content: "{:url('manage/Users/userAdd')}"
+        });
+        layer.full(index);
+    }
+    // 编辑用户
+    function userEdit(tid){
+        var index = layer.open({
+            type: 2,
+            title: '编辑用户',
+            content: "{:url('manage/Users/userEdit')}?tid="+tid
+        });
+        layer.full(index);
+    }
+    // 编辑用户表格数据
+    var table;
+	$(document).ready(function(){
+        table = $('#table').bootstrapTable({
+            onEditableSave: function (field, row, oldValue, $el) {
+                $.ajax({
+                    type: "post",
+                    url: "{:url('manage/Users/userTableEdit')}",
+                    data: { tid:row.tid },
+                    cache:false,
+                    success: function (data) {
+                        if(data.status==1)
+                        {
+                            layer.msg(data.message,{icon:1,time:1000});
+                        }
+                        else
+                        {
+                            layer.msg(data.message,{icon:2,time:2000});
+                        }
+                        return true;
+                    },
+                    error: function (data) {
+                        layer.msg("编辑失败:["+data.status+"]("+data.statusText+")", {icon:2, time:2000});
+                        return false;
+                    }
+                });
+            }
+        });
+        $('.form-control').attr('placeholder','搜索账号、手机');
+    });
+    // 用户登录记录
+    function loginLog(tid) {
+        var index = layer.open({
+            type: 2,
+            title: '编辑用户',
+            content: "{:url('manage/Users/loginLog')}?tid="+tid
+        });
+        layer.full(index);
+    }
+    </script>
+</body>
+
+</html>

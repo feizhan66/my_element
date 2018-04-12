@@ -1,0 +1,1 @@
+equipment_sn=web1521508749448&login_type=1&mobile_phone=admin&password=21232f297a57a5a743894a0e4a801fc3&platform_type=2&sign_api_versions=1.0.0&sign_equipment_sn=web1521508749448&sign_platform_type=2&sign_public_token=&sign_request_time=1521525564

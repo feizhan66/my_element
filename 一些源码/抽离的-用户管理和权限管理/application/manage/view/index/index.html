@@ -1,0 +1,76 @@
+{include file="plugin/header" /}
+<title>{$Think.session.manage_system_name}-首页</title>
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+    <div id="wrapper">
+        {include file="index/menu" /}
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row content-tabs">
+                <button class="roll-nav roll-left J_tabLeft">
+                    <i class="fa fa-backward"></i>
+                </button>
+
+                <nav class="page-tabs J_menuTabs">
+                    <div class="page-tabs-content">
+                        <a href="javascript:;" class="active J_menuTab" data-id="index.html">首页</a>
+                    </div>
+                </nav>
+
+                <button class="roll-nav roll-right J_tabRight">
+                    <i class="fa fa-forward"></i>
+                </button>
+                <div class="btn-group roll-nav roll-right">
+                    <button class="dropdown J_tabClose" data-toggle="dropdown">
+                        关闭操作<span class="caret"></span>
+                    </button>
+                    <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                        <li class="J_tabShowActive">
+                            <a>定位当前选项卡</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li class="J_tabCloseAll">
+                            <a>关闭全部选项卡</a>
+                        </li>
+                        <li class="J_tabCloseOther">
+                            <a>关闭其他选项卡</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="{:url('manage/Login/logout')}" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+            </div>
+
+            <div class="row J_mainContent" id="content-main">
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{:url('manage/Index/welcome')}" 
+                frameborder="0" data-id="index.html" seamless></iframe>
+            </div>
+
+            <div class="footer">
+                <div class="pull-right">&copy; 2017 <a target="_blank" href="https://www.hdquan.net" >广州恒动王潮信息科技有限公司</a>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+    <script src="{$Think.config.manage_res}/plugins/pace/pace.min.js"></script>
+    <script type="text/javascript">
+        /*全屏窗口*/
+        function showFullWindow(title,url)
+        {
+        	var index = layer.open({
+        		type: 2,
+        		title: title,
+        		content: url
+        	});
+        	layer.full(index);
+        }
+        /*小窗口*/
+        function showSmallWindow(title,url,w,h)
+        {
+        	layer_show(title,url,w,h);
+        }
+    </script>
+
+</body>
+</html>

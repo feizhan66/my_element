@@ -1,0 +1,236 @@
+{include file="plugin/header" /}
+{include file="plugin/table" /}
+<title>{$Think.session.manage_system_name}-用户角色列表</title>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>系统设置 > 用户角色列表</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div id="toolbar" class="btn-group">
+                            <button type="button" class="btn btn-default" title="添加用户角色" 
+                                    href="javascript:;" onClick="roleAdd()" >
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </button>
+                            <button type="button" class="btn btn-default" title="批量删除" 
+                                    href="javascript:;" onClick="roleDels()" >
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </button>
+                        </div>
+						<table id="table"
+						    data-url="{:url('manage/UserRole/roleList')}"
+                            /*基础配置*/
+                            data-striped="true"
+						    /*默认排序项*/
+                            data-sort-name="tid"
+                            data-sort-order="asc"
+                            /*工具栏相关*/
+                            data-toolbar="#toolbar"
+                            data-search="true"          /*搜索框*/
+                            data-search-on-enter-key="true"
+                            data-show-refresh="true"    /*刷新按钮*/
+                            /*分页相关*/
+                            data-side-pagination="server"
+                            data-pagination="true"      /*显示分页*/
+                            data-page-size="20"         /*每页显示条数*/
+                            /*移动端相关*/
+                            data-mobile-responsive="true"
+                            data-card-view="true"
+                            data-show-columns="true"
+                            /*设置radio或checkbox字段名称*/
+                            data-select-item-name="tids" >
+                            <thead>
+                                <tr>
+                                    <th data-field="checkbox"
+                                        data-align="center"
+                                        data-checkbox="true"></th>
+                                    <th data-field="tid"
+                                        data-align="center"
+                                        data-sortable="true"
+                                        data-visible="false">TID</th>
+                                    <th data-field="title"
+									    data-align="center"
+                                        data-sortable="true"
+										data-editable="true">名称</th>
+                                    <th data-field="description"
+									    data-align="center"
+                                        data-sortable="true"
+										data-editable="true">描述</th>
+                                    <th data-field="sort"
+									    data-align="center"
+                                        data-sortable="true"
+										data-editable="true">排序</th>
+									<th data-field="status"
+									    data-sortable="true"
+										data-align="center"
+									    class="td-status">状态</th>
+									<th data-field="manage"
+									    data-align="center"
+									    class="td-manage">操作</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<script type="text/javascript">
+    // 增加用户角色
+    function roleAdd()
+    {
+        var index = layer.open({
+            type: 2,
+            title: '添加用户角色',
+            content: "{:url('manage/UserRole/roleAdd')}"
+        });
+        layer.full(index);
+    }
+
+    // 编辑用户角色
+    function roleEdit(tid)
+    {
+        var index = layer.open({
+            type: 2,
+            title: '编辑用户角色',
+            content: "{:url('manage/UserRole/roleEdit')}?tid="+tid
+        });
+        layer.full(index);
+    }
+    // 编辑用户角色表格数据
+    var table;
+	$(document).ready(function(){
+        table = $('#table').bootstrapTable({
+            onEditableSave: function (field, row, oldValue, $el) {
+                $.ajax({
+                    type: "post",
+                    url: "{:url('manage/UserRole/roleTableEdit')}",
+                    data: { tid:row.tid, title:row.title, description:row.description, sort:row.sort },
+                    success: function (data) {
+                        if(data.status==1)
+                        {
+                            layer.msg(data.message,{icon:1,time:1000});
+                        }
+                        else
+                        {
+                            layer.msg(data.message,{icon:2,time:2000});
+                        }
+                        return true;
+                    },
+                    error: function (data) {
+                        layer.msg("编辑失败:["+data.status+"]("+data.statusText+")", {icon:2, time:2000});
+                        return false;
+                    }
+                });
+            }
+        });
+        $('.form-control').attr('placeholder','搜索名称、描述');
+    });
+    // 删除用户角色(单条数据)
+    function roleDel(obj,tid)
+    {
+        layer.confirm('删除须谨慎，确认要删除吗？',function(index){
+            $.ajax({
+                type:'post',
+                url: "{:url('manage/UserRole/roleDeletes')}",
+                data:{'tid':tid},
+                cache:false,
+                dataType:'json',
+                success:function(data){
+                    if(data.status==1)
+                    {
+                        $(obj).parents("tr").remove();
+                        layer.msg(data.message,{icon:1,time:1000});
+                    }
+                    else
+                    {
+                        layer.msg(data.message,{icon:2,time:2000});
+                    }
+                },
+                error:function() {
+                   layer.msg('删除出错',{icon:2,time:2000});
+                }
+            });
+        });
+    }
+    // 删除用户角色(批量删除)
+    function roleDels()
+    {
+	    var chk_value = $.map($('#table').bootstrapTable('getSelections'), function (row) {
+                return row.tid;
+            });
+    	if(chk_value=='')
+    	{
+    	    layer.msg('请先选择数据!', {icon:2,time:2000});
+    		return false;
+    	}
+        layer.confirm('确认要删除所有选中数据吗？',function(index){
+            $.ajax({
+                type:'post',
+                url: "{:url('manage/UserRole/roleDeletes')}",
+                data:{'tid':chk_value},
+                cache:false,
+                dataType:'json',
+                success:function(data){
+                    if(data.status==1)
+                    {
+                        table.bootstrapTable('refresh');
+                        layer.msg(data.message,{icon:1,time:1000});
+                    }
+                    else
+                    {
+                        layer.msg(data.message,{icon:2,time:2000});
+                    }
+                },
+                error:function() {
+                   layer.msg('删除出错',{icon:2,time:2000});
+                }
+            });
+        });
+    }
+    // 更改用户角色状态
+    function roleStatus(tid,status)
+    {
+        var tipInfo = '';
+        if (status==1)
+        {
+            tipInfo = '确认要启用该用户角色吗？';
+        }
+        else 
+        {
+            tipInfo = '确认要停用该用户角色吗？';
+        }
+        layer.confirm(tipInfo, function(index) {
+            $.ajax({
+                type:'post',
+                url: "{:url('manage/UserRole/roleStatus')}",
+                data:{'tid':tid, 'status':status},
+                cache:false,
+                dataType:'json',
+                success:function(data){
+                    if(data.status==1)
+                    {
+                        table.bootstrapTable('refresh');
+                        layer.msg(data.message,{icon:1,time:1000});
+                    }
+                    else
+                    {
+                        layer.msg(data.message,{icon:2,time:2000});
+                    }
+                },
+                error:function() {
+                   layer.msg('删除出错',{icon:2,time:2000});
+                }
+            });
+        });
+    }
+    </script>
+</body>
+
+</html>
