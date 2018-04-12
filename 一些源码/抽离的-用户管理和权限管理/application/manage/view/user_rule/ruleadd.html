@@ -1,0 +1,170 @@
+{include file="plugin/header" /}
+{include file="plugin/form" /}
+<title>{$Think.session.manage_system_name}-添加用户权限</title>
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>系统设置 > 用户权限列表 > 添加用户权限</h5>
+                        <div class="ibox-tools"></div>
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form form-horizontal" id="form-rule-add"
+                              method="post" action="{:url('manage/UserRule/ruleAdd')}" >
+						<div class="form-group">
+                            <label class="col-sm-2 control-label"><span class="c-red">*</span>用户权限名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="title" name="title" class="form-control" datatype="*2-20"
+                                sucmsg="通过验证！" nullmsg="用户权限名称不能为空" errormsg="请填写2到20位字符！" />
+                                <span class="help-block m-b-none Validform_checktip">用户权限名称为2~20位字符</span>
+                            </div>
+                        </div>
+						<div class="form-group">
+                            <label class="col-sm-2 control-label"><span class="c-red">*</span>模块/控制器/方法</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="name" name="name" class="form-control" datatype="/\w+/\w+/"
+                                sucmsg="通过验证！" nullmsg="模块/控制器/方法不能为空" errormsg="正确格式为模块/控制器/方法！" />
+                                <span class="help-block m-b-none Validform_checktip">模块/控制器/方法</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">权限条件</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="condition" name="condition" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">菜单图标</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="icon" name="icon" class="form-control" /> 
+                                <span class="help-block m-b-none Validform_checktip">菜单图标</span>
+                            </div>
+                        </div>
+						<div class="form-group">
+                            <label class="col-sm-2 control-label"><span class="c-red">*</span>排序(ASC)</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" value="1" placeholder="数字越小越靠前" id="sort" name="sort">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span class="c-red">*</span>是否菜单</label>
+                            <div class="radio radio-info radio-inline" style="padding-left:40px;">
+                                <input type="radio" id="menu-1" name="menu" value="1" checked>
+                                <label for="menu-1">是</label>
+                            </div>
+                            <div class="radio radio-info radio-inline" style="padding-left:40px;">
+                                <input type="radio" id="menu-0" name="menu" value="0">
+                                <label for="menu-0">否</label>
+                            </div>
+                        </div>
+						<div class="form-group">
+                            <label class="col-sm-2 control-label"><span class="c-red">*</span>状态</label>
+                            <div class="radio radio-info radio-inline" style="padding-left:40px;">
+                                <input type="radio" id="status-1" name="status" value="1" checked>
+                                <label for="status-1">启用</label>
+                            </div>
+							<div class="radio radio-info radio-inline" style="padding-left:40px;">
+                                <input type="radio" id="status-0" name="status" value="0">
+                                <label for="status-0">停用</label>
+                            </div>
+                        </div>
+						<div class="form-group">
+                            <label class="col-sm-2 control-label"><span class="c-red">*</span>父级</label>
+                            <div class="col-sm-10">
+                                <select class="form-control m-b" id="pid" name="pid">
+                                    <option value="0" selected>顶级栏目</option>
+                                    {foreach name="rules" item="vo"}
+                                        <option value="{$vo.tid}">{$vo.title}</option>
+						                {foreach name="vo['subs']" item="subVo"}
+                                            <option value="{$subVo.tid}">&nbsp;&nbsp;├ {$subVo.title}</option>
+                                        {/foreach}
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+						<div class="form-group">
+                            <label class="col-sm-2 control-label"></label>  
+                            <div class="col-sm-10">
+                                <input type="submit" class="btn btn-primary" value="&nbsp;保存&nbsp;">
+                                <span id="msgtip" style="margin-left:30px;"></span>
+                            </div>
+						</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<script>
+    $(function(){
+
+    var form = $("#form-rule-add").Validform({
+        tiptype:2,
+        postonce:true,//让表单只能提交一次，提交成功后再提交表单将不会有操作
+        ajaxPost:true,
+        tiptype:function(msg,o,cssctl){
+            if(!o.obj.is("form"))
+            {
+                var objtip=o.obj.siblings(".Validform_checktip");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+            }
+            else
+            {
+                var objtip=o.obj.find("#msgtip");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+            }
+        },
+        callback:function(data){
+            $('#msgtip').text('');//清空表单提示
+            if(data.status==1)
+            {
+                layer.msg(data.message, {
+                            icon: 1,
+                            time: 2000
+                        }, function(){
+                            parent.location.reload();
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        });
+                        return true;
+            }
+            else
+            {
+                layer.msg(data.message, {icon:2, time:2000});
+                return false;
+            }
+        }
+    });
+
+	function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
+
+    var apid =  GetQueryString("apid");
+
+    if(apid)
+    {
+        $("#pid option").each(function(i,n){
+            if($(n).val()== apid)
+            {
+                $(n).attr("selected",true);
+            }
+        });
+    }
+
+    });
+    </script>
+
+</body>
+
+</html>

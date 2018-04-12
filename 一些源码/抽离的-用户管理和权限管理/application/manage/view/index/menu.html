@@ -1,0 +1,78 @@
+<!--左侧导航开始-->
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="nav-close">
+        <i class="fa fa-times-circle"></i>
+    </div>
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+					{if condition="$Think.session.manage_account_sex eq '男'"}
+					<img alt="image" class="img-circle" src="{$Think.config.manage_res}/images/man.jpg" />
+                    {else /} 
+					<img alt="image" class="img-circle" src="{$Think.config.manage_res}/images/woman.jpg" />
+                    {/if}
+                    </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">{$Think.session.manage_account_name}</strong>
+                            </span>
+                            <span class="text-muted text-xs block">
+                                {$Think.session.manage_role_titles}<b class="caret"></b>
+                            </span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                            <a class="J_menuItem"  href="{:url('manage/Users/userInfo')}/tid/{$Think.session.manage_account_id}" >
+                                个人资料
+                            </a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem"  href="{:url('manage/Users/changePassword')}">
+                                修改密码
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{:url('manage/Login/logout')}">
+                                安全退出
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    MC
+                </div>
+            </li>
+			{foreach name="menus" item="vo"}
+                <li>
+                    {empty name="vo['subs']"}
+                        <a class="J_menuItem"  href="{:url($vo['name'])}">
+                            <i class="{$vo.icon|default=''}"></i>
+                            <span class="nav-label">{$vo.title}</span>
+                        </a>
+                    {else/}
+                        <a href="{:url($vo['name'])}">
+                            <i class="{$vo.icon|default=''}"></i>
+                            <span class="nav-label">{$vo.title}</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                    {/empty}
+                    <ul class="nav nav-second-level">
+                    {foreach name="vo['subs']" item="subVo"}
+                        <li>
+                            <a class="J_menuItem"  href="{:url($subVo['name'])}">
+                                {$subVo.title}
+                            </a>
+                        </li>
+                    {/foreach}
+                    </ul>
+                </li>
+            {/foreach}
+        </ul>
+    </div>
+</nav>
+<!--左侧导航结束

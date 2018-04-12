@@ -1,0 +1,117 @@
+{include file="plugin/header" /}
+{include file="plugin/table" /}
+<title>{$Think.session.manage_system_name}-用户角色管理</title>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>系统设置 > 用户列表 > 用户角色管理</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div id="toolbar" class="btn-group">
+                            <button type="button" class="btn btn-default" title="关联角色" 
+                                    href="javascript:;" onClick="rolesSave()" >
+                                <i class="glyphicon glyphicon-floppy-disk"></i>
+                            </button>
+                        </div>
+                        <table id="table" 
+                            data-toggle="table" 
+                            data-show-header="ture" 
+                            data-striped="true"
+                            data-id-field="tid"
+                            data-select-item-name="tids">
+                            <thead>
+                                <tr>
+                                    <th data-field="checkbox"
+                                        data-align="center"
+                                        data-checkbox="true"
+                                        data-formatter="stateFormatter"></th>
+                                    <th data-field="tid"
+                                        data-align="center">角色编号</th>
+                                    <th data-field="title"
+                                        data-align="center">角色名称</th>
+                                    <th data-field="description"
+                                        data-align="center">角色描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {foreach name="roles" item="vo"}
+                                    <tr>
+                                        <td></td>
+                                        <td>{$vo.tid}</td>
+                                        <td>{$vo.title}</td>
+                                        <td>{$vo.description}</td>
+                                    </tr>
+                                {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    // 初始化用户角色表格
+    var table;
+    $(document).ready(function(){
+        table = $('#table').bootstrapTable({});
+    });
+    // 初始化选择状态
+    function stateFormatter(value, row, index) {
+        var select_roles = ',{$select_roles},';
+        var current_tid = ','+row.tid+',';
+        if (select_roles.indexOf(current_tid)>=0) 
+        {
+            return {
+                checked: true
+            }
+        }
+        return value;
+    }
+    // 保存关联角色(批量删除)
+    function rolesSave()
+    {
+        var chk_value = $.map($('#table').bootstrapTable('getSelections'), function (row) {
+                return row.tid;
+            });
+        if(chk_value=='')
+        {
+            layer.msg('请先选择数据!', {icon:2,time:2000});
+            return false;
+        }
+        layer.confirm('确认要关联所有选中数据吗？',function(index){
+            $.ajax({
+                type:'post',
+                url: "{:url('manage/Users/userRoles')}",
+                data:{
+                    'user_tid':{$user_tid},
+                    'role_tids':chk_value
+                },
+                cache:false,
+                dataType:'json',
+                success:function(data){
+                    if(data.status==1)
+                    {
+                        table.bootstrapTable('refresh');
+                        layer.msg(data.message,{icon:1,time:1000});
+                    }
+                    else
+                    {
+                        layer.msg(data.message,{icon:2,time:2000});
+                    }
+                },
+                error:function() {
+                   layer.msg('删除出错',{icon:2,time:2000});
+                }
+            });
+        });
+    }
+    </script>
+</body>
+
+</html>
