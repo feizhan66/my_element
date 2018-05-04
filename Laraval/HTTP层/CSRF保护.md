@@ -1,0 +1,77 @@
+# CSRF保护
+
+## 简介
+
+Laravel 提供了简单的方法使你的应用免受 跨站请求伪造 (CSRF) 的袭击。跨站请求伪造是一种恶意的攻击，它凭借已通过身份验证的用户身份来运行未经过授权的命令。
+
+Laravel 为每个活跃用户的 Session 自动生成一个 CSRF 令牌。该令牌用来核实应用接收到的请求是通过身份验证的用户出于本意发送的。
+
+任何情况下在你的应用程序中定义 HTML 表单时都应该包含 CSRF 令牌隐藏域，这样 CSRF 保护中间件才可以验证请求。辅助函数 csrf_field 可以用来生成令牌字段：
+
+```
+<form method="POST" action="/profile">
+    {{ csrf_field() }}
+    ...
+</form>
+```
+
+包含在 web 中间件组里的 VerifyCsrfToken 中间件会自动验证请求里的令牌 token 与 Session 中存储的令牌 token 是否匹配。
+
+## CSRF 令牌和 Vue
+
+如果你使用 Vue.js 框架，没有 make:auth 命令提供的身份验证过渡，那么你需要在你应用的主要布局中手动定义一个 Laravel Javascript对象。这个对象会指定 Vue 在做请求时需要的 CSRF 令牌：
+
+```
+<script>
+    window.Laravel = {!! json_encode([
+        'csrfToken' => csrf_token(),
+    ]) !!};
+</script>
+```
+
+## CSRF 白名单
+有时候你可能希望设置一组并不需要 CSRF 保护的 URI。例如，如果你正在使用 Stripe 处理付款并使用了他们的 webhook 系统，你会需要将 Stripe webhook 处理的路由排除在 CSRF 保护外，因为 Stripe 并不知道发送给你路由的 CSRF 令牌是什么。
+
+一般地，你可以把这类路由放到 web 中间件外，因为 RouteServiceProvider 适用于 routes/web.php 中的所有路由。不过如果一定要这么做，你也可以将这类 URI 添加到 VerifyCsrfToken 中间件中的 $except 属性来排除对这类路由的 CSRF 保护：
+
+```
+<?php
+
+namespace App\Http\Middleware;
+
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
+
+class VerifyCsrfToken extends BaseVerifier
+{
+    /**
+     * 这些 URI 会被免除 CSRF 验证
+     *
+     * @var array
+     */
+    protected $except = [
+        'stripe/*',
+    ];
+}
+```
+
+## X-CSRF-TOKEN
+除了检查 POST 参数中的 CSRF token 外，VerifyCsrfToken 中间件还会检查 X-CSRF-TOKEN 请求头。你可以将令牌保存在 HTML meta 标签中：
+
+```
+<meta name="csrf-token" content="{{ csrf_token() }}">
+```
+
+一旦创建了 meta 标签，你就可以使用类似 jQuery 的库将令牌自动添加到所有请求的头信息中。这可以为您基于 AJAX 的应用提供简单、方便的 CSRF 保护。
+
+```
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+```
+## X-XSRF-TOKEN
+Laravel 将当前的 CSRF 令牌存储在由框架生成的每个响应中包含的一个XSRF-TOKEN cookie 中。你可以使用该令牌的值来设置 X-XSRF-TOKEN 请求头信息。
+
+这个 cookie 作为头信息发送主要是为了方便，因为一些 JavaScript 框架，如 Angular，会自动将其值添加到 X-XSRF-TOKEN 头中.
+
