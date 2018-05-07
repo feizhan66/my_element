@@ -56,7 +56,7 @@ C:\xampp\apache\conf\httpd.conf
 
 <Directory />
     Options FollowSymLinks
-    AllowOverride None
+    AllowOverride All
     Order deny,allow
     # Deny from all
     Allow from all
