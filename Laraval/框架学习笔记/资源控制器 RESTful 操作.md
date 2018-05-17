@@ -1,12 +1,17 @@
-# 资源控制器操作
+# 资源控制器RESTful操作
 
-自动生成资源类型的控制器：
+Finish！
+
+## 简介
+这是 RESTful 风格的网站访问形式
+
+## 自动生成资源类型的控制器(控制器里面会有相关的CRUD方法)：
 php artisan make:controller PhotoController --resource
 
-设置路由：
+## 设置路由：
 Route::resource('photos', 'PhotoController');
 
-包括的方法：
+## 包括的方法：
 index、create、store、show、edit、update、destroy
 
 
@@ -19,68 +24,4 @@ GET | /photos/{photo} | show | photos.show
 GET | /photos/{photo}/edit | edit | photos.edit
 PUT/PATCH | /photos/{photo} | update | photos.update
 DELETE | /photos/{photo} | destroy | photos.destroy
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
