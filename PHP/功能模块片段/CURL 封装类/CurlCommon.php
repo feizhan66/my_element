@@ -73,11 +73,12 @@ class CurlCommon
         // 3. 执行并获取HTML文档内容
         $output = curl_exec($ch);
         $info = curl_getinfo($ch);
+        $error = curl_error($ch);
         // 4. 释放curl句柄
         curl_close($ch);
 
         if($output === FALSE ){
-            return array("status"=>"error","message"=>curl_error($ch));
+            return array("status"=>"error","message"=>$error);
         }
         return array("status"=>"success","message"=>"访问成功","data"=>$output,"info"=>$info);
     }

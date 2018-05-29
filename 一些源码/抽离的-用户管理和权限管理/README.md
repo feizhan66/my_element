@@ -1,3 +1,6 @@
+##
+- 运行：composer install 加载 thinkphp 框架
+
 ```
 包含的内容：
 

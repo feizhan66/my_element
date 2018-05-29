@@ -1,4 +1,6 @@
-##把该文件放在需求去除BOM头的目录下跑一下却可。
+## 把该文件放在需求去除BOM头的目录下跑一下却可。
+## 生成BOM的原因：WINDOWS记事本打开就可能出现这情况
+
 <?php
 if (isset ( $_GET ['dir'] )) { // config the basedir
     $basedir = $_GET ['dir'];
