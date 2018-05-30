@@ -22,9 +22,12 @@ zset | 字符串成员(member)与浮点数分值(score)之间的有序映射，<
 - set get del 三个命令
 ```
 redis-cli (启动客户端)
+
+- String
 set key value (设置一个键值对)
 get key (获取键值对)
 del key (删除键值对)
+// set name huangxinyun
 ```
 四、Redis中的列表
 
@@ -38,9 +41,11 @@ rpop 右边弹出元素
 lindex 获取列表在指定位置上的一个元素
 lrange 获取列表在给定范围上的所有元素
 
+lpush key value
+lrange key 0 10
 ```
 
-五、Redis的集合
+五、Redis的集合 Set
 
 ```
 sadd 将元素添加到集合
@@ -50,7 +55,7 @@ smembers 获取集合包含的所有元素
 
 ```
 
-六、Redis的散列
+六、Redis的散列Hash
 - Redis的散列可以存储多个键值对之间的映射。和字符串一样，散列存储的值既可以是字符串又可以是数值，并且用户同样可以对散列存储的数字值执行自增操作或者自减操作
 - 相当于关系型数据库里面的行
 
@@ -60,6 +65,9 @@ hget 获取指定散列键的值
 hgetall 获取散列包含的所有键值对
 hdel 如果给定散列存在于散列里面，那么移除这个键
 
+- Hash
+HMSET user:1 username huangxinyun password 123456
+HGETALL user:1
 ```
 
 七、Redis的有序集合
@@ -70,8 +78,8 @@ zrange 根据元素在有序排列中所处的位置，从有序集合里面获�
 zrangebyscore 获取有序集合在给定分值范围内的所有元素
 zrem 如果给定成员存在于有序集合，那么移除这个成员
 
-
-
+zadd key 0 redis
+zrangebyscore key 0 1000
 ```
 
 

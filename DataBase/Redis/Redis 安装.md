@@ -59,5 +59,8 @@ redis 127.0.0.1:6379>
 redis 127.0.0.1:6379> ping
 PONG
 ```
-
+```angular2html
+// 在WIN的安装目录下
+./redis-cli
+```
 
