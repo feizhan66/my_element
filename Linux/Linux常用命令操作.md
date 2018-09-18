@@ -1,14 +1,14 @@
 # 创建文件夹
-```angular2html
+```shell
 mkdir 文件夹名字
 ```
 # 创建文件
-```angular2html
+```shell
 
 ```
 
 # 赋予文件可执行权限
-```angular2html
+```shell
 chmod a+x 文件路径
 
 // 赋予文件夹权限
