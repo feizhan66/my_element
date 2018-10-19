@@ -5,14 +5,14 @@ a = open('../demo/array_demo.py','r',-1,'utf-8')
 
 # print('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
 
-c = a.readline()#读取一整行字符串
+c = a.readline()  # 读取一整行字符串
 print(c)
-c1 = a.tell()#返回当前在文件中的位置
+c1 = a.tell()  # 返回当前在文件中的位置
 print(c1)
 
-c2 = a.readline()#读取一整行字符串
+c2 = a.readline()  # 读取一整行字符串
 print(c2)
-c12 = a.tell()#返回当前在文件中的位置
+c12 = a.tell()  # 返回当前在文件中的位置
 print(c12)
 
 
