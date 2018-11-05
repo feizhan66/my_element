@@ -96,6 +96,55 @@ sudo ./install                         #phalcon依赖于php7.0-dev库，所以�
 sudo pear install Net_DNS2
 
 
+# 配置多版本PHP站点
+在多站点配置好后再修改一些监听就可以
+
+注意：防火墙端口问题
+```php
+server {
+    listen 8080;
+    #listen 443 ssl;
+    server_name blueoceanad.xinyun.com ad-mirror.hk.blueoceanpay.com ad-dev.hk.blueoceanpay.com;
+    # root /blue/hk/ad/public;
+    root /mnt/d/code/blueoceanad/public;    
+
+    #ssl_certificate     /etc/nginx/ssl/live/api.hk.blueoceanpay.com/fullchain.pem;
+    #ssl_certificate_key /etc/nginx/ssl/live/api.hk.blueoceanpay.com/privkey.pem;
+    #ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+    #ssl_prefer_server_ciphers on;
+    #ssl_ciphers         'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
+
+    location / {
+      index index.html index.htm index.php;
+      try_files $uri $uri/ /index.php?$query_string;
+      if (!-e $request_filename) {
+        rewrite ^/(.*) /index.php?$1 last;
+      }
+    }
+    
+    location /.well-known/acme-challenge/ {
+      proxy_pass http://ssl.developer.comenix.com/.well-known/acme-challenge/;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+      root   html;
+    }
+
+    location ~ \.php$ {
+      fastcgi_pass   127.0.0.1:9000;
+      fastcgi_index  index.php;
+      fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      include        fastcgi_params;
+    }       
+        
+    location ~ /\.(ht|hg|ignore) {
+      deny  all;
+    }
+}
+```
+
+
 
 
 
