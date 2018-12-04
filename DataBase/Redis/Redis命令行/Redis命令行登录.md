@@ -13,6 +13,10 @@ redis-cli -h 127.0.0.1 -p 6379 -a "mypass"
 redis-cli --raw
 ```
 
+# 返回所有键
+```bash
+keys *
+```
 
 
 # 以毫秒为单位返回 key 的剩余的过期时间。
