@@ -17,6 +17,6 @@ https://windows.php.net/downloads/pecl/releases/redis/
 
 ## 配置ini
 在php.ini加上
-extension=php_mongodb.dll
+extension=php_redis.dll
 
 
