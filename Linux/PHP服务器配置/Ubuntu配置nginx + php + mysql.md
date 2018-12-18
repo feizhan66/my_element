@@ -44,8 +44,9 @@ sudo apt install libpcre32-3
 
 ```
 location ~ \.php$ {
-                root    /var/www/html;                                  #php文件所在的根目录
-                fastcgi_pass 127.0.0.1:9000;                      #fpm监听的IP和端口
+                #root    /var/www/html;                                  #php文件所在的根目录
+                #fastcgi_pass 127.0.0.1:9000;                      #fpm监听的IP和端口
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
                 fastcgi_index index.php;
                 fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
                 include fastcgi_params;
