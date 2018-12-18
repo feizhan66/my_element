@@ -65,7 +65,7 @@ sudo nginx -t # 查看启动失败的原因
 8. 打开/etc/php/7.0/fpm/pool.d/www.conf文件，找到listen=的这两行，设置相应的IP和端口值 。
 
 ```
-;listen = /run/php/php7.0-fpm.sock
+;listen = /var/run/php/php7.0-fpm.sock # 用这个速度快
 listen = 127.0.0.1:9000
 ```
 
