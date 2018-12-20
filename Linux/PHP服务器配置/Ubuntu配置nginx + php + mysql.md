@@ -44,8 +44,9 @@ sudo apt install libpcre32-3
 
 ```
 location ~ \.php$ {
-                root    /var/www/html;                                  #php文件所在的根目录
-                fastcgi_pass 127.0.0.1:9000;                      #fpm监听的IP和端口
+                #root    /var/www/html;                                  #php文件所在的根目录
+                #fastcgi_pass 127.0.0.1:9000;                      #fpm监听的IP和端口
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
                 fastcgi_index index.php;
                 fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
                 include fastcgi_params;
@@ -64,7 +65,7 @@ sudo nginx -t # 查看启动失败的原因
 8. 打开/etc/php/7.0/fpm/pool.d/www.conf文件，找到listen=的这两行，设置相应的IP和端口值 。
 
 ```
-;listen = /run/php/php7.0-fpm.sock
+;listen = /var/run/php/php7.0-fpm.sock # 用这个速度快
 listen = 127.0.0.1:9000
 ```
 
