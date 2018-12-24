@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .input-control {
+            overflow: hidden;
+            margin: 100px auto;
+            text-align: center;
+        }
+        .input-control::before {
+            content: attr(font-data); /* CSS获取HTML标签的值 */
+            position: absolute;
+            margin-left: 0px;
+            color: #f00;
+            transition: all .25s; /* IE10+ */
+            line-height: 20px;
+            border: 1px solid gold;
+        }
+        .input-control:active::before {
+            margin-left: -20px;
+            opacity: 0; /* IE9+ */
+        }
+
+        .input-control input {
+            text-indent: 23px;
+            transition: all .25s;
+        }
+
+        .input-control:active input {
+            text-indent: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="input-control iconfontyyy" font-data="HK">
+    <input type="text"> 把 * 换成
+    <a href='http://www.iconfont.cn/'>iconfont</a>
+</div>
+
+</body>
+</html>
