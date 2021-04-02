@@ -1,5 +1,5 @@
 <?php
-$pdo = new \PDO('mysql:host=pc-3ns8fh64m7c7j5552.rwlb.rds.aliyuncs.com;dbname=test_pro', 'test_pro', 'test_pro@dasjdhjRdasd');
+$pdo = new \PDO('mysql:host=数据库连接;dbname=数据库', '账户', '密码');
 for ($i = 1; $i < 10; $i++) {
     $start = time();
     echo '开始时间戳: ', $start, PHP_EOL;
